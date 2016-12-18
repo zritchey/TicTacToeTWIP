@@ -10,36 +10,33 @@ public static int round;
     public static char []name={'x','o'};
     public static void main(String[] args) {
         round=0;
-
         Board brd=new Board();
-
-        char input[][]=brd.returnp();
+        char input[][]=Board.play;
         System.out.println("Would you like to play the game?");
         Scanner sc=new Scanner (System.in);
         String res=sc.nextLine();
+
         if (res.equalsIgnoreCase("yes")) {
-            System.out.println("The player is an 'x' by default. The location of each move will be chosen by row and column\nA coin will be tossed to determine who goes first ");
+            System.out.println("The player is an 'x' by default. The location of each move will be chosen by row and column\nA coin will be tossed to determine who goes first.");
+            System.out.println("Ties go to the computer.\n");
             System.out.println("Call heads or tails:");
             res = sc.next();
             int player = new Random().nextInt(5002) % 2;
-
             if (res.trim().equalsIgnoreCase("heads") && player == 0 || res.trim().equalsIgnoreCase("tails") && player == 1) {
                 player = 0;
             } else {
                 player = 1;
             }
-int start=player;
+            int start=player;
             while (round < max) {
-
                 int x = -1;
                 int y = -1;
                 player = player%2;
-
                 if (player == 0) {
-                    System.out.println("Select a row: ");
-                    y = sc.nextInt() - 1;
                     System.out.println("Select a Column: ");
                     x = sc.nextInt() - 1;
+                    System.out.println("Select a row: ");
+                    y = sc.nextInt() - 1;
                     if (x > -1 && y > -1 && x < Board.size && y < Board.size) {
                         if (input[x][y] == ' ') {
                             brd.update(x, y, name[player], input);
@@ -58,11 +55,20 @@ int start=player;
                     round++;
                     brd.print();
                 }
+                 if (Board.evaluate(name[1])){
+                    System.out.println("The computer won.");
+                    break;
+                }
+                else if (Board.evaluate(name[0])){
+                    System.out.println("You won!");
+                    break;
+                }else if(round==max){
+                    System.out.println(" The game was a Tie. \nThis means the computer won.");
+                }
             }
         }
         else{
             System.out.println("Ok. Bye.");
         }
     }
-
 }
