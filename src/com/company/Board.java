@@ -27,6 +27,7 @@ play[size-1][size-2]='z';
             if(i<size-1)
                 System.out.println(sep);
         }
+        System.out.println();
     }
     public void update(int x,int y, char c, char[][]a){
         a[x][y]=c;
@@ -84,18 +85,23 @@ play[size-1][size-2]='z';
                         forward++;
                     }
                     if(x<domain&&y<range) {
-                        if (play[free[p][ 0] - (x -)][free[p][1] - (y - free[p][1] - 1)] == Main.name[1]) {
+                        if (play[free[p][ 0] - (x -domain)][free[p][1] - (y - range)] == Main.name[1]) {
                             back++;     // this is all very problematic
                         }
                     }
                 }
             }
-            choice [p]={row,column,forward,back};
-        }
+            choice [p][0]=row;
+            choice[p][1]=column;
+            choice[p][2]=forward;
+            choice[p][3]=back;
 
+        }
+        //find the optimal solution
+//change bord to the optimal solution
     }
     public boolean evaluate(){         ////// the array must be evaluated perpendicularly and //
                                             // diagonally after every move, to determine if a player has won.
-
+return true;       ///have to implement this class
     }
 }

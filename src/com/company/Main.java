@@ -32,7 +32,7 @@ public static int round;
 
                 int x = -1;
                 int y = -1;
-                player %= player;
+                player = player%2;
                 if (player == 0) {
                     System.out.println("Select a row: ");
                     x = sc.nextInt() - 1;
