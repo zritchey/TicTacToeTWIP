@@ -9,6 +9,7 @@ public static int round;
     public static int max= (int)Math.pow(Board.size,2);
     public static char []name={'x','o'};
     public static void main(String[] args) {
+        round=0;
 
         Board brd=new Board();
 
@@ -27,12 +28,13 @@ public static int round;
             } else {
                 player = 1;
             }
-
+int start=player;
             while (round < max) {
 
                 int x = -1;
                 int y = -1;
                 player = player%2;
+
                 if (player == 0) {
                     System.out.println("Select a row: ");
                     x = sc.nextInt() - 1;
@@ -51,12 +53,15 @@ public static int round;
                         System.out.println("That was an invalid move.");
                     }
                 } else {
-                    brd.computer();
+                    brd.computer(round,input);
                     player++;
                     round++;
                     brd.print();
                 }
             }
+        }
+        else{
+            System.out.println("Ok. Bye.");
         }
     }
 

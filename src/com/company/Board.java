@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Created by zr162 on 12/16/16.
@@ -13,7 +14,7 @@ public class Board {
         for(char[]a:play) {
             Arrays.fill(a, ' ');
         }
-play[size-1][size-2]='z';
+
     }
     public void print(){
         for(int i=0;i<size;i++){
@@ -34,12 +35,16 @@ play[size-1][size-2]='z';
         play=a;
 
     }
+    public void update(int[]a,char c, char[][]b){
+        update(a[0],a[1],c,b);
+    }
 
     public char [][] returnp(){
         return play;
     }
 
-    public void computer(){
+    public void computer(int r ,char[][]bored){
+        int[]final_spot={-1,-1};
          int [][]a=new int [size*size][2];
         int count=0;
         for (int j=0;j<size;j++){
@@ -53,6 +58,7 @@ play[size-1][size-2]='z';
         }
         int [][]free=new int[count][];
         System.arraycopy(a,0,free,0,count);
+        a=new int[5][2];
         a[0][0]=size/2;
         a[0][1]=size/2;
         int s=0;
@@ -97,8 +103,44 @@ play[size-1][size-2]='z';
             choice[p][3]=back;
 
         }
-        //find the optimal solution
-//change bord to the optimal solution
+        int num[]=new int[choice.length];
+        for(int p=0;p<choice.length;p++){
+
+            num[p]=Math.max(Math.max(choice[p][0],choice[p][1]),Math.max(choice[p][2],choice[p][3]));
+        }
+
+        int pick1 = Arrays.binarySearch(num, size-2);
+        for(s=0;s<num.length;s++){
+            num[s]=choice[s][0]+choice[s][1]+choice[s][2]+choice[s][3];
+        }
+        if(r<=2){
+            while(1==1){
+                int ran=new Random().nextInt(a.length);
+                int find=Arrays.binarySearch(free,a[ran]);
+                if(find>-1){
+                    update(a[ran],Main.name[1],bored);
+                    final_spot=free[find];
+                    break;
+                }
+            }
+
+        }
+        else if (pick1>-1){
+            update(free[pick1],Main.name[1],bored);
+            final_spot=free[pick1];
+        }
+        else{
+            int indx=0;
+            for(s=0;s<num.length;s++){
+                indx=Math.max(indx,num[s]);
+            }
+            indx=Arrays.binarySearch(num,indx);
+            update(free[indx],Main.name[1],bored);
+            final_spot=free[indx];
+
+
+        }
+        System.out.println("The computer chose "+Arrays.toString(final_spot));
     }
     public boolean evaluate(){         ////// the array must be evaluated perpendicularly and //
                                             // diagonally after every move, to determine if a player has won.
