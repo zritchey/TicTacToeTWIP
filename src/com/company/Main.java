@@ -37,9 +37,9 @@ int start=player;
 
                 if (player == 0) {
                     System.out.println("Select a row: ");
-                    x = sc.nextInt() - 1;
-                    System.out.println("Select a Column: ");
                     y = sc.nextInt() - 1;
+                    System.out.println("Select a Column: ");
+                    x = sc.nextInt() - 1;
                     if (x > -1 && y > -1 && x < Board.size && y < Board.size) {
                         if (input[x][y] == ' ') {
                             brd.update(x, y, name[player], input);

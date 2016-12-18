@@ -58,19 +58,7 @@ public class Board {
         }
         int [][]free=new int[count][];
         System.arraycopy(a,0,free,0,count);
-        a=new int[5][2];
-        a[0][0]=size/2;
-        a[0][1]=size/2;
-        int s=0;
-        for (int j=0;j<size;j+=(size-1)){
-            for(int i=0;i<size;i+=(size-1)){
-                s++;
-                a[s][0]=i;
-                a[s][1]=j;
-
-            }
-        }
-
+       int s=0;
         int [][]choice=new int[count][4];// multidimensional array is used to store (row, column,forward,back)
         for (int p=0;p<free.length;p++) {
             int domain= (size-1)-free[p][0];
@@ -113,10 +101,25 @@ public class Board {
         for(s=0;s<num.length;s++){
             num[s]=choice[s][0]+choice[s][1]+choice[s][2]+choice[s][3];
         }
+        a=new int[5][2];
+
+        a[0][0]=size/2;
+        a[0][1]=size/2;
+        s=1;
+        for (int j=0;j<size;j+=(size-1)){
+            for(int i=0;i<size;i+=(size-1)){
+
+                a[s][0]=i;
+                a[s][1]=j;
+                s++;
+            }
+        }
+
         if(r<=2){
             while(1==1){
                 int ran=new Random().nextInt(a.length);
-                int find=Arrays.binarySearch(free,a[ran]);
+                System.out.println("hello");
+                int find=Match(free,a[ran]);
                 if(find>-1){
                     update(a[ran],Main.name[1],bored);
                     final_spot=free[find];
@@ -134,16 +137,37 @@ public class Board {
             for(s=0;s<num.length;s++){
                 indx=Math.max(indx,num[s]);
             }
+            int p=-1;
+            for(int j=0;j<num.length;j++){
+                if (indx==num[j]){
+                    p=j;
+                    j=num.length;
+                }
+            }
             indx=Arrays.binarySearch(num,indx);
-            update(free[indx],Main.name[1],bored);
-            final_spot=free[indx];
+            update(free[p],Main.name[1],bored);
+            final_spot=free[p];
 
 
         }
-        System.out.println("The computer chose "+Arrays.toString(final_spot));
+        System.out.println("The computer chose ("+(final_spot[0]+1)+", "+(final_spot[1]+1)+")" );
     }
     public boolean evaluate(){         ////// the array must be evaluated perpendicularly and //
                                             // diagonally after every move, to determine if a player has won.
 return true;       ///have to implement this class
+    }
+    public int Match(int[][]s,int[]f){
+        int here=-1;
+        for (int i=s.length-1 ;i>=0;i--){
+            boolean t=true;
+            for(int j=0;j<f.length;j++) {
+                t=t&&(s[i][j]==f[j]);
+            }
+            if(t){
+                here=i;
+                break;
+            }
+        }
+        return here;
     }
 }
