@@ -90,7 +90,7 @@ public class Board {
         for(int p=0;p<choice.length;p++){
             num[p]=Math.max(Math.max(choice[p][0],choice[p][1]),Math.max(choice[p][2],choice[p][3]));
         }
-        int pick1 = Arrays.binarySearch(num, size-2);
+        int pick1 = Arrays.binarySearch(num, size-1);
         for(s=0;s<num.length;s++){
             num[s]=choice[s][0]+choice[s][1]+choice[s][2]+choice[s][3];
         }
@@ -185,6 +185,7 @@ public class Board {
         int num[]=new int[choice.length];
         for(int p=0;p<choice.length;p++){
             num[p]=Math.max(Math.max(choice[p][0],choice[p][1]),Math.max(choice[p][2],choice[p][3]));
+            System.out.println(Arrays.toString(free[p])+"\t"+num[p]+"\t"+Arrays.toString(choice[p]));
         }
         int full=0;
         for(int j=0;j<num.length;j++){
