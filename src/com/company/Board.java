@@ -132,7 +132,6 @@ public class Board {
                     j=num.length;
                 }
             }
-            indx=Arrays.binarySearch(num,indx);
             update(free[p],Main.name[1],bored);
             final_spot=free[p];
         }
@@ -162,17 +161,17 @@ public class Board {
             int column=0;
             for (int y = 0; y < size-1; y++) {
                 for (int x = 0; x < size-1; x++) {
-                    if (play[free[p][0]+(x-free[p][0])][free[p][1]]==Main.name[1]){
+                    if (play[free[p][0]+(x-free[p][0])][free[p][1]]==player){
                         row++;
                     }
-                    if(play[free[p][0]][free[p][1]+(y-free[p][1])]==Main.name[1]){
+                    if(play[free[p][0]][free[p][1]+(y-free[p][1])]==player){
                         column++;
                     }
-                    if (play[free[p][0]+(x-free[p][0])][free[p][1]+(y-free[p][1])]==Main.name[1]){
+                    if (play[free[p][0]+(x-free[p][0])][free[p][1]+(y-free[p][1])]==player){
                         forward++;
                     }
                     if(x<domain&&y<range) {
-                        if (play[free[p][ 0] - (x -domain)][free[p][1] - (y - range)] == Main.name[1]) {
+                        if (play[free[p][ 0] - (x -domain)][free[p][1] - (y - range)] == player) {
                             back++;     // this is all very problematic
                         }
                     }

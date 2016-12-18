@@ -15,8 +15,9 @@ public static int round;
         System.out.println("Would you like to play the game?");
         Scanner sc=new Scanner (System.in);
         String res=sc.nextLine();
-
+         int yes=0;
         if (res.equalsIgnoreCase("yes")) {
+             yes++;
             System.out.println("The player is an 'x' by default. The location of each move will be chosen by row and column\nA coin will be tossed to determine who goes first.");
             System.out.println("Ties go to the computer.\n");
             System.out.println("Call heads or tails:");
@@ -60,15 +61,18 @@ public static int round;
                     break;
                 }
                 else if (Board.evaluate(name[0])){
-                    System.out.println("You won!");
+                    System.out.println("You won! Congratulations!");
                     break;
                 }else if(round==max){
-                    System.out.println(" The game was a Tie. \nThis means the computer won.");
+                    System.out.println("The game was a Tie. \nThis means the computer won.");
                 }
             }
         }
         else{
             System.out.println("Ok. Bye.");
+        }
+        if(yes==1){
+            System.out.println("\n\nThanks for playing!");
         }
     }
 }
