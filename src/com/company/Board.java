@@ -2,7 +2,8 @@ package com.company;
 
 import java.util.Arrays;
 import java.util.Random;
-
+                                    ///ArrayList of Arraylists?
+                                    ///use trees and combinatorial game theory
 /**
  * Created by zr162 on 12/16/16.
  */
