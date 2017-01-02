@@ -51,16 +51,16 @@ public static int round;
                         System.out.println("That was an invalid move.");
                     }
                 } else {
-                    brd.computer(round,input);
+                    brd.possible(input,player);
                     player++;
                     round++;
                     brd.print();
                 }
-                 if (Board.evaluate(name[1])){
+                 if (Board.evaluate(name[1],input)){
                     System.out.println("The computer won.");
                     break;
                 }
-                else if (Board.evaluate(name[0])){
+                else if (Board.evaluate(name[0],input)){
                     System.out.println("You won! Congratulations!");
                     break;
                 }else if(round==max){
