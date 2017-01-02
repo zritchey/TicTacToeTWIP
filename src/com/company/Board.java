@@ -16,8 +16,13 @@ public class Board {
         for(char[]a:play) {
             Arrays.fill(a, ' ');
         }
+        play[1][2]='x';
+        play[0][1]='x';
+        play[2][0]='x';
+        play[1][1]='x';
+        play[0][0]='x';
     }
-    public void print(){
+    public static void print(){
         for(int i=0;i<size;i++){
             String sep="\n";
             for(int j=0;j<size;j++){
@@ -68,7 +73,7 @@ public class Board {
                 }
             }
         }
-
+ 
         ArrayList aryl=new ArrayList();
 
        char [][]free=new char[size][size];
@@ -82,7 +87,8 @@ public class Board {
             aryl.add(free);
         }
         aryl.trimToSize();
-        char[][][]poss=aryl.
+       aryl.toArray();
+
     }
 
 
@@ -108,24 +114,27 @@ public class Board {
             int forward=0;
             int row=0;
             int column=0;
-            for (int y = 0; y < size-1; y++) {
-                for (int x = 0; x < size-1; x++) {
-                    if (play[free[p][0]+(x-free[p][0])][free[p][1]]==player){
+            for (int y = 0; y < size; y++) {
+                if(play[free[p][0]][y]==player){
+                column++;
+            }
+
+
+                    if (play[y][free[p][1]]==player){
                         row++;
                     }
-                    if(play[free[p][0]][free[p][1]+(y-free[p][1])]==player){
-                        column++;
-                    }
-                    if (play[free[p][0]+(x-free[p][0])][free[p][1]+(y-free[p][1])]==player){
+
+
+                if (play[y][y]==player){
                         forward++;
                     }
-                    if(x<domain&&y<range) {
-                        if (play[free[p][ 0] - (x -domain)][free[p][1] - (y - range)] == player) {
-                            back++;     // this is all very problematic
-                        }
-                    }
+
+                if (play[y][(size-1)-y] == player) {
+                    back++;
                 }
+
             }
+            System.out.println(row+"\n"+column+"\n"+forward+"\n"+back);
             choice [p][0]=row;
             choice[p][1]=column;
             choice[p][2]=forward;
@@ -136,6 +145,7 @@ public class Board {
             num[p]=Math.max(Math.max(choice[p][0],choice[p][1]),Math.max(choice[p][2],choice[p][3]));
             System.out.println(Arrays.toString(free[p])+"\t"+num[p]+"\t"+Arrays.toString(choice[p]));
         }
+        print();
         int full=0;
         for(int j=0;j<num.length;j++){
             full=Math.max(full,num[j]);
@@ -159,4 +169,3 @@ public class Board {
         return here;
     }
 }
-//227
