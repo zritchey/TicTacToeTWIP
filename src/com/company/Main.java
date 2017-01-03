@@ -18,8 +18,7 @@ public static int round;
          int yes=0;
         if (res.equalsIgnoreCase("yes")) {
              yes++;
-            System.out.println("The player is an 'x' by default. The location of each move will be chosen by row and column\nA coin will be tossed to determine who goes first.");
-            System.out.println("Ties go to the computer.\n");
+            System.out.println("The player is an 'x' by default. The location of each move will be chosen by row and column\nA coin will be tossed to determine who goes first.\n");
             System.out.println("Call heads or tails:");
             res = sc.next();
             int player = new Random().nextInt(5002) % 2;
@@ -51,7 +50,7 @@ public static int round;
                         System.out.println("That was an invalid move.");
                     }
                 } else {
-                    brd.possible(input,player);
+                    brd.possible(input);
                     player++;
                     round++;
                     brd.print();
@@ -64,7 +63,7 @@ public static int round;
                     System.out.println("You won! Congratulations!");
                     break;
                 }else if(round==max){
-                    System.out.println("The game was a Tie. \nThis means the computer won.");
+                    System.out.println("The game was a Tie.");
                 }
             }
         }

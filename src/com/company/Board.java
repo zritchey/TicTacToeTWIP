@@ -16,8 +16,8 @@ public class Board {
         for(char[]a:play) {
             Arrays.fill(a, ' ');
         }
-
     }
+
     public static void print(){
         for(int i=0;i<size;i++){
             String sep="\n";
@@ -32,119 +32,60 @@ public class Board {
         }
         System.out.println();
     }
+
     public static void update(int x,int y, char c, char[][]a){
         a[x][y]=c;
         play=a;
     }
     public static void update(int[]a,char c, char[][]b){
-
         update(a[0],a[1],c,b);
     }
-    public char [][] returnp(){
-        return play;
-    }
 
-
-
-public static void possible (char[][]brd,int p){
-    possible (brd, p, true);
-}
-
-// remember the first move from the free array. then alternate players and make all possible moves
-    public static void possible(char[][]brd,int p,boolean b){
+    public static void possible(char[][]brd){
         int[]final_spot={-1,-1};
         int free[][]=find(' ',brd);
-        int ties[]=new int [free.length];
-        char [][] test=new char[size][size];
-
-        if (play[1][1]==' ' ){
-            final_spot[0]=1;
-            final_spot[1]=1;
-
-
+        int[][] o = evaluater(' ', 'o', brd);
+        int comp[] = new int[o.length];
+        for (int j = 0; j < o.length; j++) {
+            comp[j] = Math.max(Math.max(o[j][0], o[j][1]), Math.max(o[j][2], o[j][3]));
+        }
+        int max2 = comp[0];
+        for (int j = 1; j < comp.length; j++) {
+            max2 = Math.max(comp[j], max2);
+        }
+        int[][] x = evaluater(' ', 'x', brd);
+        int play[] = new int[x.length];
+        for (int j = 0; j < x.length; j++) {
+            play[j] = x[j][0]+ x[j][1]+ x[j][2]+ x[j][3];
+        }
+        int max1 = play[0];
+        for (int j = 1; j < play.length; j++) {
+            max1 = Math.max(play[j], max1);
+        }
+        int indx=0;
+        int [] sums=new int [x.length];
+        if(max2==size-1){
+            indx=Arrays.binarySearch(comp,max2);
+        }
+        else if(brd[1][1]==' '){
+            int []a={1,1};
+            indx=Match(free,a);
         }
         else {
-
-           for (int i=0;i<free.length;i++) {
-
-               if (b){
-                   System.arraycopy(play,0,test,0,play.length);
-               p = 0;
-               b=false;
-                   test[free[i][0]][free[i][1]]='o';
-               }
-
-
-
-                   while (find(' ',test).length>0) {
-                       int indx=0;
-                       if (p == 0) {
-                           int[][] o = evaluater(' ', 'o',test);
-
-                           int comp[] = new int[o.length];
-
-                           for (int j = 0; j < o.length; j++) {
-                               comp[j] = Math.max(Math.max(o[j][0], o[j][1]), Math.max(o[j][2], o[j][3]));
-
-                           }
-                           int max2 = comp[0];
-                           for (int j=1;j<comp.length;j++){
-                               max2 = Math.max(comp[j], max2);
-                           }
-                           indx=Arrays.binarySearch(comp,max2);
-                           if (indx>-1)
-                            test[free[indx][0]][free[indx][1]]='x';
-                           else
-                               System.out.println(indx+"player test");
-                       }
-                       else {
-                           int[][] x = evaluater(' ', 'x', test);
-                           int play[] = new int[x.length];
-
-                           for (int j = 0; j < x.length; j++) {
-                               play[j] = Math.max(Math.max(x[j][0], x[j][1]), Math.max(x[j][2], x[j][3]));
-                           }
-                           int max1= play[0];
-                           for (int j=1;j<play.length;j++){
-                               max1 = Math.max(play[j], max1);
-                           }
-                           indx=Arrays.binarySearch(play,max1);
-                           if (indx>-1)
-                           test[free[indx][0]][free[indx][1]]='x';
-                           else
-                               System.out.println(indx+"computer test");
-                       }
-                       p++;
-                       p = p % 2;
-                       if (evaluate('o', test) || evaluate('x', test)) {
-                          b=true;
-                           break;
-
-                       } else if (evaluater(' ', test).length == 0) {
-
-                           ties[i]++;
-                           b=true;
-                           break;
-
-                       }
-
-                       possible (test,p,b);
-
-                   }
-
-           }
-            int indx=0;
-            for (int j=0;j<ties.length;j++){
-               if (ties[j]>=indx)
-                   indx=j;
+        int rem=0;
+            for (int j = 0; j < free.length; j++) {
+                if (sums[j] >= rem) {
+                    indx = j;
+                    rem=sums[j];
+                }
             }
-            final_spot[0]=free[indx][0];
-            final_spot[1]=free[indx][1];
         }
+        final_spot[0]=free[indx][0];
+        final_spot[1]=free[indx][1];
         update(final_spot,'o',brd);
         System.out.println("The computer chose ("+(final_spot[0]+1)+", "+(final_spot[1]+1)+")" );
-        p++;
     }
+
     public static int[][] find(char player,char[][]brd){
         int [][]a=new int [size*size][2];
         int count=0;
@@ -161,7 +102,6 @@ public static void possible (char[][]brd,int p){
         System.arraycopy(a,0,b,0,count);
         return b;
     }
-
 
     public static int [][] evaluater(char basis,char player,char[][]brd){
        int[][]a=find(basis,brd);
@@ -195,8 +135,8 @@ public static void possible (char[][]brd,int p){
             choice[p][3]=back;
         }
         return choice;
-
     }
+
     public static int[][]evaluater(char player,char[][] brd){
         return evaluater(player,player,brd);
     }
@@ -210,8 +150,7 @@ public static void possible (char[][]brd,int p){
         return num==size;
     }
 
-
-    public int Match(int[][]s,int[]f){
+    public static int Match(int[][]s,int[]f){
         int here=-1;
         for (int i=s.length-1 ;i>=0;i--){
             boolean t=true;
