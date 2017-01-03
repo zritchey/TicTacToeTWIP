@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,8 +17,7 @@ public static int round;
          int yes=0;
         if (res.equalsIgnoreCase("yes")) {
              yes++;
-            System.out.println("The player is an 'x' by default. The location of each move will be chosen by row and column\nA coin will be tossed to determine who goes first.");
-            System.out.println("Ties go to the computer.\n");
+            System.out.println("The player is an 'x' by default. The location of each move will be chosen by row and column\nA coin will be tossed to determine who goes first.\n");
             System.out.println("Call heads or tails:");
             res = sc.next();
             int player = new Random().nextInt(5002) % 2;
@@ -51,20 +49,20 @@ public static int round;
                         System.out.println("That was an invalid move.");
                     }
                 } else {
-                    brd.computer(round,input);
+                    brd.possible(input);
                     player++;
                     round++;
                     brd.print();
                 }
-                 if (Board.evaluate(name[1])){
+                 if (Board.evaluate(name[1],input)){
                     System.out.println("The computer won.");
                     break;
                 }
-                else if (Board.evaluate(name[0])){
+                else if (Board.evaluate(name[0],input)){
                     System.out.println("You won! Congratulations!");
                     break;
                 }else if(round==max){
-                    System.out.println("The game was a Tie. \nThis means the computer won.");
+                    System.out.println("The game was a Tie.");
                 }
             }
         }
